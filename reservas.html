@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas - Cabañas Nuestro Sueño</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS CSS para animaciones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Estilos específicos para la página de reservas */
+        .reservas-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/cabana-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .form-section {
+            padding: 50px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .cabana-option {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .cabana-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .cabana-option.selected {
+            border: 2px solid #28a745;
+            background-color: rgba(40, 167, 69, 0.05);
+        }
+        
+        .cabana-img {
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Cabañas Nuestro Sueño</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="reservas.html">Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contacto">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section para Reservas -->
+    <div class="reservas-hero text-center">
+        <div class="container">
+            <h1 class="display-4" data-aos="fade-up">Reserva tu Cabaña</h1>
+            <p class="lead" data-aos="fade-up" data-aos-delay="100">Disfruta de la naturaleza en Malalcahuello</p>
+        </div>
+    </div>
+    
+    <!-- Formulario de Reservas -->
+    <section class="form-section" id="reservas">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="form-container" data-aos="fade-up">
+                        <h2 class="text-center mb-4">Formulario de Reserva</h2>
+                        <p class="text-center mb-5">Completa los siguientes datos para reservar tu estadía</p>
+                        
+                        <form id="reservaForm" action="confirmacion.html" method="GET">
+                            <!-- Datos personales -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4 class="mb-3"><i class="fas fa-user me-2"></i>Datos Personales</h4>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="nombre" class="form-label">Nombre Completo</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="rut" class="form-label">RUT o Pasaporte</label>
+                                    <input type="text" class="form-control" id="rut" name="rut" required>
+                                </div>
+                            </div>
+                            
+                            <!-- Fechas y personas -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4 class="mb-3"><i class="fas fa-calendar-alt me-2"></i>Fechas y Huéspedes</h4>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="checkin" class="form-label">Fecha de Llegada</label>
+                                    <input type="date" class="form-control" id="checkin" name="checkin" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="checkout" class="form-label">Fecha de Salida</label>
+                                    <input type="date" class="form-control" id="checkout" name="checkout" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="adultos" class="form-label">Adultos</label>
+                                    <select class="form-select" id="adultos" name="adultos" required>
+                                        <option value="1">1</option>
+                                        <option value="2" selected>2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="ninos" class="form-label">Niños</label>
+                                    <select class="form-select" id="ninos" name="ninos">
+                                        <option value="0" selected>0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Selección de cabaña -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4 class="mb-3"><i class="fas fa-home me-2"></i>Selecciona tu Cabaña</h4>
+                                </div>
+                                
+                                <div class="col-md-4 mb-3">
+                                    <div class="cabana-option" onclick="seleccionarCabana('volcan')">
+                                        <input type="radio" name="cabana" id="volcan" value="Cabaña Volcán" class="d-none" required>
+                                        <img src="img/cabana1.jpg" class="cabana-img mb-3" alt="Cabaña Volcán">
+                                        <h5>Cabaña Volcán</h5>
+                                        <p>Vista al volcán, 2 dormitorios, hasta 6 personas</p>
+                                        <p class="text-success fw-bold">$120.000 CLP / noche</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 mb-3">
+                                    <div class="cabana-option" onclick="seleccionarCabana('bosque')">
+                                        <input type="radio" name="cabana" id="bosque" value="Cabaña Bosque" class="d-none" required>
+                                        <img src="img/cabana2.jpg" class="cabana-img mb-3" alt="Cabaña Bosque">
+                                        <h5>Cabaña Bosque</h5>
+                                        <p>Rodeada de árboles, 1 dormitorio, hasta 4 personas</p>
+                                        <p class="text-success fw-bold">$90.000 CLP / noche</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 mb-3">
+                                    <div class="cabana-option" onclick="seleccionarCabana('montana')">
+                                        <input type="radio" name="cabana" id="montana" value="Cabaña Montaña" class="d-none" required>
+                                        <img src="img/cabana3.jpg" class="cabana-img mb-3" alt="Cabaña Montaña">
+                                        <h5>Cabaña Montaña</h5>
+                                        <p>Cerca del sendero, 3 dormitorios, hasta 8 personas</p>
+                                        <p class="text-success fw-bold">$150.000 CLP / noche</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Servicios adicionales -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4 class="mb-3"><i class="fas fa-concierge-bell me-2"></i>Servicios Adicionales</h4>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="servicio1" name="servicios" value="desayuno">
+                                        <label class="form-check-label" for="servicio1">
+                                            Desayuno incluido (+$15.000 CLP por día)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="servicio2" name="servicios" value="jacuzzi">
+                                        <label class="form-check-label" for="servicio2">
+                                            Acceso a Jacuzzi exterior (+$20.000 CLP por estadía)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="servicio3" name="servicios" value="tour">
+                                        <label class="form-check-label" for="servicio3">
+                                            Tour guiado por el Parque Nacional (+$30.000 CLP por persona)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="servicio4" name="servicios" value="leña">
+                                        <label class="form-check-label" for="servicio4">
+                                            Leña para la chimenea (+$10.000 CLP por estadía)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Comentarios adicionales -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h4 class="mb-3"><i class="fas fa-comment me-2"></i>Solicitudes Especiales</h4>
+                                    <textarea class="form-control" id="comentarios" name="comentarios" rows="3" placeholder="¿Tienes alguna solicitud especial? (Opcional)"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Botón de continuar a pago -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg px-5" id="btnContinuar">
+                                    Continuar a Pago <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Cabañas Nuestro Sueño</h5>
+                    <p>Malalcahuello, Chile<br>contacto@cabanasnuestrosueno.cl<br>+56 9 1234 5678</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0 text-center">
+                    <h5>Síguenos</h5>
+                    <div class="mt-2">
+                        <a href="https://instagram.com/" class="text-white me-3" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="https://facebook.com/" class="text-white me-3" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="https://twitter.com/" class="text-white" target="_blank"><i class="fab fa-twitter fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <h5>Enlaces rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Inicio</a></li>
+                        <li><a href="index.html#nosotros" class="text-white">Nosotros</a></li>
+                        <li><a href="index.html#galeria" class="text-white">Galería</a></li>
+                        <li><a href="index.html#contacto" class="text-white">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <p class="small mb-0">&copy; 2025 Cabañas Nuestro Sueño. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS para animaciones -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out'
+        });
+        
+        // Fecha mínima para checkin (hoy)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkin').setAttribute('min', today);
+        
+        // Actualizar fecha mínima de checkout basada en checkin
+        document.getElementById('checkin').addEventListener('change', function() {
+            const checkinDate = new Date(this.value);
+            checkinDate.setDate(checkinDate.getDate() + 1); // Mínimo una noche
+            const minCheckout = checkinDate.toISOString().split('T')[0];
+            document.getElementById('checkout').setAttribute('min', minCheckout);
+            
+            // Si la fecha de checkout es menor, la actualizamos
+            if (document.getElementById('checkout').value < minCheckout) {
+                document.getElementById('checkout').value = minCheckout;
+            }
+        });
+        
+        // Función para seleccionar cabaña
+        function seleccionarCabana(id) {
+            // Quitar selección anterior
+            document.querySelectorAll('.cabana-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Marcar la cabaña seleccionada
+            document.getElementById(id).checked = true;
+            document.getElementById(id).closest('.cabana-option').classList.add('selected');
+        }
+        
+        // Validación del formulario antes de enviar
+        document.getElementById('reservaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Verificar que se haya seleccionado una cabaña
+            const cabanaSeleccionada = document.querySelector('input[name="cabana"]:checked');
+            if (!cabanaSeleccionada) {
+                alert('Por favor, selecciona una cabaña.');
+                return;
+            }
+            
+            // Verificar fechas válidas
+            const checkin = new Date(document.getElementById('checkin').value);
+            const checkout = new Date(document.getElementById('checkout').value);
+            
+            if (checkout <= checkin) {
+                alert('La fecha de salida debe ser posterior a la fecha de llegada.');
+                return;
+            }
+            
+            // Si todo está bien, enviar el formulario
+            this.submit();
+        });
+    </script>
+</body>
+</html>

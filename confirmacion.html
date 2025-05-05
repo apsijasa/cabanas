@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Reserva - Cabañas Nuestro Sueño</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS CSS para animaciones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .confirmation-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/cabana-vista.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .confirmation-section {
+            padding: 50px 0 80px;
+        }
+        
+        .confirmation-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .confirmation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #28a745, #20c997);
+        }
+        
+        .detail-section {
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .detail-section:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-title {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .detail-content {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .summary-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        
+        .price-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-top: 1px solid #dee2e6;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        
+        .checkmark-container {
+            width: 80px;
+            height: 80px;
+            background-color: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+        }
+        
+        .checkmark {
+            color: white;
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Cabañas Nuestro Sueño</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservas.html">Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contacto">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section para Confirmación -->
+    <div class="confirmation-hero text-center">
+        <div class="container">
+            <h1 class="display-4" data-aos="fade-up">Confirmación de Reserva</h1>
+            <p class="lead" data-aos="fade-up" data-aos-delay="100">Un paso más para disfrutar de tu estadía</p>
+        </div>
+    </div>
+    
+    <!-- Sección de Confirmación -->
+    <section class="confirmation-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="confirmation-card" data-aos="fade-up">
+                        <div class="text-center mb-4">
+                            <div class="checkmark-container">
+                                <i class="fas fa-check checkmark"></i>
+                            </div>
+                            <h2>¡Reserva recibida correctamente!</h2>
+                            <p class="text-muted">Por favor revisa los detalles y procede al pago para confirmar tu reserva.</p>
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i> Tu reserva estará pendiente hasta que realices el pago.
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <p class="detail-title">Número de Reserva</p>
+                                    <p class="detail-content" id="reservaId">NS-</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <p class="detail-title">Fecha de Reserva</p>
+                                    <p class="detail-content" id="fechaReserva"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <p class="detail-title">Nombre</p>
+                            <p class="detail-content" id="nombreCliente"></p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <p class="detail-title">Email</p>
+                                    <p class="detail-content" id="emailCliente"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <p class="detail-title">Teléfono</p>
+                                    <p class="detail-content" id="telefonoCliente"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <p class="detail-title">Cabaña Seleccionada</p>
+                            <p class="detail-content" id="cabanaSeleccionada"></p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <p class="detail-title">Check-in</p>
+                                    <p class="detail-content" id="fechaCheckin"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <p class="detail-title">Check-out</p>
+                                    <p class="detail-content" id="fechaCheckout"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <p class="detail-title">Adultos</p>
+                                    <p class="detail-content" id="numAdultos"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-section">
+                                    <p class="detail-title">Niños</p>
+                                    <p class="detail-content" id="numNinos"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <p class="detail-title">Servicios Adicionales</p>
+                            <p class="detail-content" id="serviciosAdicionales">Ninguno seleccionado</p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <p class="detail-title">Comentarios</p>
+                            <p class="detail-content" id="comentariosReserva">Sin comentarios</p>
+                        </div>
+                        
+                        <!-- Resumen de precios -->
+                        <div class="summary-section">
+                            <h4 class="mb-3">Resumen de Precios</h4>
+                            
+                            <div class="price-row">
+                                <span>Tarifa por noche:</span>
+                                <span id="tarifaNoche">$0 CLP</span>
+                            </div>
+                            
+                            <div class="price-row">
+                                <span>Número de noches:</span>
+                                <span id="numNoches">0</span>
+                            </div>
+                            
+                            <div class="price-row">
+                                <span>Subtotal alojamiento:</span
