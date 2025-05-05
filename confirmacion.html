@@ -251,4 +251,242 @@
                             </div>
                             
                             <div class="price-row">
-                                <span>Subtotal alojamiento:</span
+                                <span>Subtotal alojamiento:</span>
+                                <span id="subtotalAlojamiento">$0 CLP</span>
+                            </div>
+                            
+                            <div id="seccionServiciosAdicionales">
+                                <!-- Aquí se agregarán dinámicamente los servicios adicionales -->
+                            </div>
+                            
+                            <div class="price-row price-total">
+                                <span>TOTAL:</span>
+                                <span id="precioTotal">$0 CLP</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Botones de acción -->
+                        <div class="mt-4 text-center">
+                            <button id="btnPagar" class="btn btn-success btn-lg px-5 me-2">
+                                <i class="fas fa-credit-card me-2"></i>Proceder al Pago
+                            </button>
+                            <a href="reservas.html" class="btn btn-outline-secondary btn-lg px-4">
+                                <i class="fas fa-pencil-alt me-2"></i>Modificar Reserva
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Cabañas Nuestro Sueño</h5>
+                    <p>Malalcahuello, Chile<br>contacto@cabanasnuestrosueno.cl<br>+56 9 1234 5678</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0 text-center">
+                    <h5>Síguenos</h5>
+                    <div class="mt-2">
+                        <a href="https://instagram.com/" class="text-white me-3" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="https://facebook.com/" class="text-white me-3" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="https://twitter.com/" class="text-white" target="_blank"><i class="fab fa-twitter fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <h5>Enlaces rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Inicio</a></li>
+                        <li><a href="index.html#nosotros" class="text-white">Nosotros</a></li>
+                        <li><a href="index.html#galeria" class="text-white">Galería</a></li>
+                        <li><a href="index.html#contacto" class="text-white">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <p class="small mb-0">&copy; 2025 Cabañas Nuestro Sueño. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS para animaciones -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out'
+        });
+        
+        // Función para obtener parámetros de la URL
+        function obtenerParametroURL(nombre) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nombre);
+        }
+        
+        // Generar ID de reserva único
+        function generarIdReserva() {
+            const timestamp = new Date().getTime().toString().slice(-6);
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return 'NS-' + timestamp + random;
+        }
+        
+        // Calcular número de noches entre dos fechas
+        function calcularNoches(fechaEntrada, fechaSalida) {
+            const entrada = new Date(fechaEntrada);
+            const salida = new Date(fechaSalida);
+            const diferencia = salida.getTime() - entrada.getTime();
+            return Math.ceil(diferencia / (1000 * 3600 * 24));
+        }
+        
+        // Formatear precio en CLP
+        function formatearPrecio(precio) {
+            return '$' + precio.toLocaleString('es-CL') + ' CLP';
+        }
+        
+        // Obtener precio base por cabaña
+        function obtenerPrecioCabana(cabana) {
+            switch(cabana) {
+                case 'Cabaña Volcán':
+                    return 120000;
+                case 'Cabaña Bosque':
+                    return 90000;
+                case 'Cabaña Montaña':
+                    return 150000;
+                default:
+                    return 0;
+            }
+        }
+        
+        // Obtener precio de servicios adicionales
+        function obtenerPrecioServicio(servicio, numNoches, numPersonas) {
+            switch(servicio) {
+                case 'desayuno':
+                    return 15000 * numNoches; // Precio por día
+                case 'jacuzzi':
+                    return 20000; // Precio por estadía
+                case 'tour':
+                    return 30000 * (parseInt(numPersonas) || 1); // Precio por persona
+                case 'leña':
+                    return 10000; // Precio por estadía
+                default:
+                    return 0;
+            }
+        }
+        
+        // Formatear fecha en formato legible
+        function formatearFecha(fecha) {
+            if (!fecha) return '';
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(fecha).toLocaleDateString('es-ES', opciones);
+        }
+        
+        // Cuando el documento esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Asignar ID de reserva
+            document.getElementById('reservaId').textContent = generarIdReserva();
+            
+            // Mostrar fecha actual
+            document.getElementById('fechaReserva').textContent = formatearFecha(new Date());
+            
+            // Obtener y mostrar datos del cliente
+            document.getElementById('nombreCliente').textContent = obtenerParametroURL('nombre') || 'No especificado';
+            document.getElementById('emailCliente').textContent = obtenerParametroURL('email') || 'No especificado';
+            document.getElementById('telefonoCliente').textContent = obtenerParametroURL('telefono') || 'No especificado';
+            
+            // Obtener y mostrar datos de la reserva
+            const cabana = obtenerParametroURL('cabana') || 'No especificada';
+            document.getElementById('cabanaSeleccionada').textContent = cabana;
+            
+            const checkin = obtenerParametroURL('checkin');
+            const checkout = obtenerParametroURL('checkout');
+            document.getElementById('fechaCheckin').textContent = formatearFecha(checkin);
+            document.getElementById('fechaCheckout').textContent = formatearFecha(checkout);
+            
+            document.getElementById('numAdultos').textContent = obtenerParametroURL('adultos') || '0';
+            document.getElementById('numNinos').textContent = obtenerParametroURL('ninos') || '0';
+            
+            // Obtener comentarios
+            const comentarios = obtenerParametroURL('comentarios');
+            if (comentarios && comentarios.trim() !== '') {
+                document.getElementById('comentariosReserva').textContent = comentarios;
+            }
+            
+            // Calcular precios
+            const precioCabana = obtenerPrecioCabana(cabana);
+            const numNoches = calcularNoches(checkin, checkout) || 0;
+            const subtotalAlojamiento = precioCabana * numNoches;
+            
+            document.getElementById('tarifaNoche').textContent = formatearPrecio(precioCabana);
+            document.getElementById('numNoches').textContent = numNoches;
+            document.getElementById('subtotalAlojamiento').textContent = formatearPrecio(subtotalAlojamiento);
+            
+            // Procesar servicios adicionales
+            let precioTotal = subtotalAlojamiento;
+            const servicios = obtenerParametroURL('servicios');
+            
+            if (servicios) {
+                const serviciosArray = servicios.split(',');
+                const numPersonas = parseInt(obtenerParametroURL('adultos')) + parseInt(obtenerParametroURL('ninos'));
+                
+                if (serviciosArray.length > 0 && serviciosArray[0] !== '') {
+                    let serviciosHtml = '';
+                    let serviciosTexto = [];
+                    
+                    serviciosArray.forEach(function(servicio) {
+                        const precioServicio = obtenerPrecioServicio(servicio, numNoches, numPersonas);
+                        precioTotal += precioServicio;
+                        
+                        let nombreServicio = '';
+                        switch(servicio) {
+                            case 'desayuno':
+                                nombreServicio = 'Desayuno incluido';
+                                break;
+                            case 'jacuzzi':
+                                nombreServicio = 'Acceso a Jacuzzi';
+                                break;
+                            case 'tour':
+                                nombreServicio = 'Tour guiado por el Parque Nacional';
+                                break;
+                            case 'leña':
+                                nombreServicio = 'Leña para chimenea';
+                                break;
+                            default:
+                                nombreServicio = servicio;
+                        }
+                        
+                        serviciosTexto.push(nombreServicio);
+                        
+                        serviciosHtml += `
+                            <div class="price-row">
+                                <span>${nombreServicio}:</span>
+                                <span>${formatearPrecio(precioServicio)}</span>
+                            </div>
+                        `;
+                    });
+                    
+                    document.getElementById('seccionServiciosAdicionales').innerHTML = serviciosHtml;
+                    document.getElementById('serviciosAdicionales').textContent = serviciosTexto.join(', ');
+                }
+            }
+            
+            // Mostrar precio total
+            document.getElementById('precioTotal').textContent = formatearPrecio(precioTotal);
+            
+            // Funcionalidad del botón de pago
+            document.getElementById('btnPagar').addEventListener('click', function() {
+                alert('¡Gracias por tu reserva! Ahora serás redirigido a nuestra plataforma de pagos.');
+                // Aquí iría la redirección a la pasarela de pago
+            });
+        });
+    </script>
+</body>
+</html>

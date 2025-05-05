@@ -287,6 +287,28 @@
         </div>
     </div>
     
+    <!-- Modal de Tiempo Agotado -->
+    <div class="modal fade" id="tiempoAgotadoModal" tabindex="-1" aria-labelledby="tiempoAgotadoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tiempoAgotadoModalLabel">Tiempo Agotado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-exclamation-circle text-warning" style="font-size: 4rem;"></i>
+                    </div>
+                    <h4>El tiempo para realizar tu pago ha expirado</h4>
+                    <p>Tu reserva ha sido cancelada. Por favor, inicia el proceso nuevamente.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="reservas.html" class="btn btn-primary">Realizar Nueva Reserva</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">
         <div class="container">
@@ -335,6 +357,7 @@
         
         let metodoPagoSeleccionado = 'webpay';
         const confirmacionModal = new bootstrap.Modal(document.getElementById('confirmacionModal'));
+        const tiempoAgotadoModal = new bootstrap.Modal(document.getElementById('tiempoAgotadoModal'));
         let countdownInterval;
         
         // Función para obtener parámetros de la URL
@@ -377,3 +400,82 @@
             let tiempo = 15 * 60; // 15 minutos en segundos
             
             countdownInterval = setInterval(function() {
+                tiempo--;
+                
+                // Calcular minutos y segundos
+                const minutos = Math.floor(tiempo / 60);
+                const segundos = tiempo % 60;
+                
+                // Actualizar el texto del contador
+                document.getElementById('countdown').textContent = 
+                    `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+                
+                // Si el tiempo llega a 0, detener el contador y mostrar mensaje
+                if (tiempo <= 0) {
+                    clearInterval(countdownInterval);
+                    tiempoAgotadoModal.show();
+                }
+            }, 1000);
+        }
+        
+        // Función para cargar los detalles de la reserva desde la URL
+        function cargarDetallesReserva() {
+            // Generar un ID de reserva aleatorio si no viene en la URL
+            const reservaId = getParameterByName('id') || generarIdReserva();
+            const cabana = getParameterByName('cabana') || 'Cabaña Araucaria';
+            const checkin = getParameterByName('checkin') || '01/06/2025';
+            const checkout = getParameterByName('checkout') || '05/06/2025';
+            const total = getParameterByName('total') || '350000';
+            
+            // Mostrar los detalles en la página
+            document.getElementById('reservaId').textContent = 'NS-' + reservaId;
+            document.getElementById('idReservaModal').textContent = 'NS-' + reservaId;
+            document.getElementById('cabanaReserva').textContent = cabana;
+            document.getElementById('checkinReserva').textContent = checkin;
+            document.getElementById('checkoutReserva').textContent = checkout;
+            document.getElementById('totalReserva').textContent = formatearPrecioCLP(total);
+        }
+        
+        // Función para generar un ID de reserva aleatorio
+        function generarIdReserva() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+        
+        // Función para procesar el pago
+        function procesarPago() {
+            // Simulación de procesamiento (normalmente aquí iría una llamada a la API de pago)
+            document.getElementById('btnProcesarPago').disabled = true;
+            document.getElementById('btnProcesarPago').innerHTML = 
+                '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Procesando...';
+            
+            // Simulamos un tiempo de procesamiento
+            setTimeout(function() {
+                // Detener el contador
+                clearInterval(countdownInterval);
+                
+                // Mostrar modal de confirmación
+                confirmacionModal.show();
+                
+                // Restaurar botón para futuros usos
+                document.getElementById('btnProcesarPago').disabled = false;
+                document.getElementById('btnProcesarPago').innerHTML = 
+                    'Procesar Pago <i class="fas fa-lock ms-2"></i>';
+            }, 2000);
+        }
+        
+        // Inicializar la página cuando cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar detalles de la reserva
+            cargarDetallesReserva();
+            
+            // Iniciar contador
+            iniciarContador();
+            
+            // Evento para el botón de pago
+            document.getElementById('btnProcesarPago').addEventListener('click', function() {
+                procesarPago();
+            });
+        });
+    </script>
+</body>
+</html>
